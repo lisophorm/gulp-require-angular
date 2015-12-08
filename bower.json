@@ -1,0 +1,8 @@
+{
+  "name": "gulp-require-angular",
+  "dependencies": {
+    "requirejs": "~2.1.22",
+    "angular": "angularjs#~1.4.8",
+    "angular-ui-router": "~0.2.15"
+  }
+}
