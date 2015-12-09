@@ -1,21 +1,19 @@
-(function() {
+'use strict'
 
-  define([
-    'app',
-    'app-controller'
-  ], function(app) {
-    return app.config(function($stateProvider, $urlRouterProvider) {
-      $stateProvider
-        .state('root', {
-          url: '/',
-          templateUrl: 'app.html',
-          controller: 'AppController as app'
-        });
+define([
+  'app',
+  'app-controller'
+], function(app) {
 
-      $urlRouterProvider.otherwise('/');
+  return app.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('root', {
+        url: '/',
+        templateUrl: 'app.html',
+        controller: 'AppController as app'
+      });
 
-      console.log(app.name + ' config block executed');
-    });
+    $urlRouterProvider.otherwise('/');
   });
 
-})();
+});

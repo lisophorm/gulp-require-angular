@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<!-- Automatic Angular app bootstrap doesn't work with requirejs. Therefore we cannot use the ng-app directive. -->
-<html id="ng-app">
-
-<head>
-  <title>gulp-requirejs-angularjs</title>
-</head>
-
-<body>
-
-  <!-- This is where $state will inject our templates -->
-  <div ui-view></div>
-
-  <!-- Load requirejs and define the data-main file -->
-  <script data-main="main" src="../bower_components/requirejs/require.js"></script>
-</body>
-
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>gulp-require-angular</title>
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <div ui-view></div>
+    <script data-main="main" src="vendor/require.js"></script>
+  </body>
 </html>

@@ -1,13 +1,13 @@
-(function() {
+'use strict'
 
-  define([
-    'app'
-  ], function(app) {
-    return app.controller('AppController', function() {
-      this.greeting = {
-        message: 'Hello!'
-      };
-    })
-  });
+define([
+  'app'
+], function(app) {
 
-})();
+  return app.controller('AppController', function() {
+    this.greeting = {
+      message: 'Hello world! 8'
+    };
+  })
+
+});
