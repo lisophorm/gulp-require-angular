@@ -6,7 +6,7 @@ define([
 
   return app.controller('AppController', function() {
     this.greeting = {
-      message: 'Hello world! 8'
+      message: 'Hello world!'
     };
   })
 

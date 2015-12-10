@@ -22,6 +22,8 @@ gulp.task('serve', ['build'], function() {
   browserSync.init({
     server: 'dist'
   });
+
+  gulp.watch('./src/**/*', ['build', browserSync.reload]);
 });
 
 gulp.task('default', ['build']);
