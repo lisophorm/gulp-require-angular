@@ -5,7 +5,9 @@ define([
 ], function(app) {
 
   return app.controller('AppController', function() {
-    this.greeting = {
+    var vm = this;
+
+    vm.greeting = {
       message: 'Hello world!'
     };
   })
