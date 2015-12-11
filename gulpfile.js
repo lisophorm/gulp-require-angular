@@ -5,10 +5,18 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
   eslint = require('gulp-eslint'),
   uglify = require('gulp-uglify'),
-  size = require('gulp-size'),
   sourcemaps = require('gulp-sourcemaps'),
   minifyHtml = require('gulp-minify-html'),
-  ngAnnotate = require('gulp-ng-annotate');
+  ngAnnotate = require('gulp-ng-annotate'),
+  rev = require('gulp-rev'),
+  templateCache = require('gulp-angular-templatecache'),
+  templatesToCache = [
+    './src/**/*.tpl.html'
+  ],
+  vendorLibs = [
+    './bower_components/angular/angular.min.js',
+    './bower_components/angular-ui-router/release/angular-ui-router.min.js'
+  ];
 
 function errorHandler() {
   // Common error handler
@@ -28,8 +36,7 @@ gulp.task('build', ['clean'], function() {
   // Uglify requirejs and copy it to /dist/vendor
   gulp.src('./bower_components/requirejs/require.js')
     .pipe(uglify({preserveComments: 'license'}))
-    .pipe(gulp.dest('./dist/vendor/'))
-    .pipe(size({showFiles: true}));
+    .pipe(gulp.dest('./dist/vendor/'));
 
   // Annotate, uglify, create source maps and copy JS source files to /dist
   gulp.src(['./src/**/*.js'])
@@ -37,19 +44,25 @@ gulp.task('build', ['clean'], function() {
     .pipe(sourcemaps.init())
     .pipe(uglify()).on('error', errorHandler)
     .pipe(sourcemaps.write('maps'))
+    // .pipe(rev())
     .pipe(gulp.dest('./dist/'));
 
-  // Minify html and copy to /dist
-  gulp.src(['./src/**/*.html'])
+  // Minify index.html and copy to /dist
+  gulp.src(['./src/index.html'])
     .pipe(minifyHtml())
-    .pipe(gulp.dest('./dist/'))
-    .pipe(size({showFiles: true}));
+    .pipe(gulp.dest('./dist/'));
+
+  // Create template cache
+  gulp.src(templatesToCache)
+    .pipe(templateCache({
+      moduleSystem: 'RequireJS',
+      standalone: true
+    }))
+    // .pipe(rev())
+    .pipe(gulp.dest('./dist/'));
 
   // Copy vendor libs to /dist/vendor
-  return gulp.src([
-      './bower_components/angular/angular.min.js',
-      './bower_components/angular-ui-router/release/angular-ui-router.min.js'
-    ])
+  return gulp.src(vendorLibs)
     .pipe(gulp.dest('./dist/vendor/'));
 });
 

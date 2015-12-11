@@ -1,12 +1,13 @@
-'use strict'
-
 define([
   'angular',
-  'angular-ui-router'
+  'angular-ui-router',
+  'templates'
 ], function(angular) {
+  'use strict';
 
   return angular.module('myApp', [
-    'ui.router'
+    'ui.router',
+    'templates'
   ]);
 
 });

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 require.config({
   paths: {
@@ -9,9 +9,7 @@ require.config({
     'angular': {
       exports: 'angular'
     },
-    'angular-ui-router': {
-      deps: ['angular']
-    }
+    'angular-ui-router': ['angular']
   }
 });
 

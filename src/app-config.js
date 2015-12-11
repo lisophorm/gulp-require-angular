@@ -1,10 +1,9 @@
-'use strict'
-
 define([
   'app',
   'app-controller'
 ], function(app) {
-
+  'use strict';
+  
   return app.config(
     /** @ngInject */
     function($logProvider, $stateProvider, $urlRouterProvider) {
@@ -14,7 +13,7 @@ define([
       $stateProvider
         .state('root', {
           url: '/',
-          templateUrl: 'app.html',
+          templateUrl: 'app.tpl.html',
           controller: 'AppController as app'
         });
 
