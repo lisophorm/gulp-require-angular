@@ -10,6 +10,8 @@ var gulp = require('gulp'),
   ngAnnotate = require('gulp-ng-annotate'),
   rev = require('gulp-rev'),
   templateCache = require('gulp-angular-templatecache'),
+  less = require('gulp-less'),
+  minifyCSS = require('gulp-minify-css'),
   templatesToCache = [
     './src/**/*.tpl.html'
   ],
@@ -60,6 +62,12 @@ gulp.task('build', ['clean'], function() {
     }))
     // .pipe(rev())
     .pipe(gulp.dest('./dist/'));
+
+  // Parse LESS files and minify resulting CSS
+  gulp.src('./src/**/*.less')
+    .pipe(less())
+    .pipe(minifyCSS())
+    .pipe(gulp.dest('./dist/'))
 
   // Copy vendor libs to /dist/vendor
   return gulp.src(vendorLibs)
