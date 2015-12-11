@@ -5,15 +5,21 @@ define([
   'app-controller'
 ], function(app) {
 
-  return app.config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-      .state('root', {
-        url: '/',
-        templateUrl: 'app.html',
-        controller: 'AppController as app'
-      });
+  return app.config(
+    /** @ngInject */
+    function($logProvider, $stateProvider, $urlRouterProvider) {
+      // Enable log
+      $logProvider.debugEnabled(true);
 
-    $urlRouterProvider.otherwise('/');
-  });
+      $stateProvider
+        .state('root', {
+          url: '/',
+          templateUrl: 'app.html',
+          controller: 'AppController as app'
+        });
+
+      $urlRouterProvider.otherwise('/');
+    }
+  );
 
 });

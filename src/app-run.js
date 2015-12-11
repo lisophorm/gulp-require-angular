@@ -4,8 +4,11 @@ define([
   'app'
 ], function(app) {
 
-  return app.run(/* ngInject */function($log) {
-    $log(app.name + ' run block executed');
-  });
+  return app.run(
+    /** @ngInject */
+    function($log) {
+      $log.debug(app.name + ' run block executed');
+    }
+  );
 
 });

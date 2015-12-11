@@ -2,8 +2,8 @@
 
 require.config({
   paths: {
-    'angular': 'vendor/angular',
-    'angular-ui-router': 'vendor/angular-ui-router'
+    'angular': 'vendor/angular.min',
+    'angular-ui-router': 'vendor/angular-ui-router.min'
   },
   shim: {
     'angular': {

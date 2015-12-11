@@ -1,7 +1,18 @@
+(function() {
+
 var gulp = require('gulp'),
   del = require('del')
   browserSync = require('browser-sync').create(),
-  eslint = require('gulp-eslint');
+  eslint = require('gulp-eslint'),
+  uglify = require('gulp-uglify'),
+  size = require('gulp-size'),
+  sourcemaps = require('gulp-sourcemaps'),
+  minifyHtml = require('gulp-minify-html'),
+  ngAnnotate = require('gulp-ng-annotate');
+
+function errorHandler() {
+  // Common error handler
+}
 
 gulp.task('clean', function() {
   // Delete /dist directory
@@ -14,17 +25,32 @@ gulp.task('build', ['clean'], function() {
     .pipe(eslint())
     .pipe(eslint.format());
 
-  // Copy JS source files to /dist
-  gulp.src(['./src/**/*'])
-    .pipe(gulp.dest('./dist'));
+  // Uglify requirejs and copy it to /dist/vendor
+  gulp.src('./bower_components/requirejs/require.js')
+    .pipe(uglify({preserveComments: 'license'}))
+    .pipe(gulp.dest('./dist/vendor/'))
+    .pipe(size({showFiles: true}));
+
+  // Annotate, uglify, create source maps and copy JS source files to /dist
+  gulp.src(['./src/**/*.js'])
+    .pipe(ngAnnotate())
+    .pipe(sourcemaps.init())
+    .pipe(uglify()).on('error', errorHandler)
+    .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('./dist/'));
+
+  // Minify html and copy to /dist
+  gulp.src(['./src/**/*.html'])
+    .pipe(minifyHtml())
+    .pipe(gulp.dest('./dist/'))
+    .pipe(size({showFiles: true}));
 
   // Copy vendor libs to /dist/vendor
   return gulp.src([
-      './bower_components/requirejs/require.js',
-      './bower_components/angular/angular.js',
-      './bower_components/angular-ui-router/release/angular-ui-router.js'
+      './bower_components/angular/angular.min.js',
+      './bower_components/angular-ui-router/release/angular-ui-router.min.js'
     ])
-    .pipe(gulp.dest('./dist/vendor'));
+    .pipe(gulp.dest('./dist/vendor/'));
 });
 
 gulp.task('serve', ['build'], function() {
@@ -37,3 +63,5 @@ gulp.task('serve', ['build'], function() {
 });
 
 gulp.task('default', ['build']);
+
+})();
